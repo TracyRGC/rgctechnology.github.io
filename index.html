@@ -99,6 +99,24 @@
   .why-title{font-family:var(--serif);font-size:20px;font-weight:600;color:var(--white);margin-bottom:12px;}
   .why-desc{font-size:15px;color:var(--pale);line-height:1.7;font-weight:300;}
   #contact{background:var(--light);}
+.contact-form{background:var(--white);border:1px solid var(--pale);border-radius:var(--radius);padding:32px 28px;margin-top:24px;}
+.contact-form h3{font-family:var(--serif);font-size:20px;font-weight:700;color:var(--navy);margin-bottom:6px;}
+.contact-form .form-sub{font-size:14px;color:var(--slate);line-height:1.6;margin-bottom:22px;}
+.field{margin-bottom:16px;}
+.field label{display:block;font-size:12px;font-weight:600;color:var(--navy);letter-spacing:0.4px;margin-bottom:6px;}
+.field input,.field textarea{width:100%;font-family:var(--sans);font-size:15px;color:var(--body);background:var(--white);border:1px solid var(--pale);border-radius:var(--radius);padding:11px 13px;transition:border-color 0.15s,box-shadow 0.15s;}
+.field textarea{min-height:120px;resize:vertical;}
+.field input:focus,.field textarea:focus{outline:none;border-color:var(--sky);box-shadow:0 0 0 3px rgba(74,159,212,0.18);}
+.field input::placeholder,.field textarea::placeholder{color:#9AA7B2;}
+.form-actions{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:4px;}
+.btn-submit{font-family:var(--sans);background:var(--sky);color:var(--navy);font-size:14px;font-weight:600;padding:13px 28px;border:none;border-radius:var(--radius);cursor:pointer;letter-spacing:0.3px;transition:background 0.2s,transform 0.15s;}
+.btn-submit:hover{background:var(--pale);transform:translateY(-1px);}
+.btn-submit:disabled{opacity:0.55;cursor:default;transform:none;}
+.form-note{font-size:12px;color:var(--slate);}
+.form-status{font-size:14px;line-height:1.6;margin-top:16px;padding:12px 16px;border-radius:var(--radius);display:none;}
+.form-status.ok{display:block;background:var(--light);border-left:3px solid var(--sky);color:var(--navy);}
+.form-status.err{display:block;background:#FDECEC;border-left:3px solid #C0392B;color:#7A2318;}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;}
   .contact-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;}
   .contact-intro .section-sub{margin-bottom:40px;}
   .contact-links{display:flex;flex-direction:column;gap:16px;}
@@ -327,6 +345,25 @@
             <div><div class="contact-link-label">LinkedIn</div><div class="contact-link-value">linkedin.com/company/rgctechnology</div></div>
           </a>
         </div>
+<div class="contact-form">
+<h3>Send a message</h3>
+<p class="form-sub">Tell me briefly what you are dealing with and I will come back to you.</p>
+<form id="rgc-contact" action="https://api.web3forms.com/submit" method="POST">
+<input type="hidden" name="access_key" value="2e2dd6f7-55fa-4935-bc0e-bb573d579578">
+<input type="hidden" name="subject" value="Website enquiry - rgctechnology.co.uk">
+<input type="hidden" name="from_name" value="RGC Technology website">
+<div class="hp" aria-hidden="true"><label for="botcheck">Leave this field empty</label><input id="botcheck" type="checkbox" name="botcheck" tabindex="-1" autocomplete="off"></div>
+<div class="field"><label for="cf-name">Name</label><input id="cf-name" type="text" name="name" required autocomplete="name" placeholder="Your name"></div>
+<div class="field"><label for="cf-email">Email</label><input id="cf-email" type="email" name="email" required autocomplete="email" placeholder="you@company.com"></div>
+<div class="field"><label for="cf-org">Organisation <span style="font-weight:400;color:var(--slate);">(optional)</span></label><input id="cf-org" type="text" name="organisation" autocomplete="organization" placeholder="Company or organisation"></div>
+<div class="field"><label for="cf-msg">How can I help?</label><textarea id="cf-msg" name="message" required placeholder="A sentence or two is plenty."></textarea></div>
+<div class="form-actions"><button type="submit" class="btn-submit">Send message</button><span class="form-note">I read every message personally.</span></div>
+<div class="form-status" id="cf-status" role="status" aria-live="polite"></div>
+</form>
+</div>
+<script>
+(function(){var f=document.getElementById('rgc-contact');if(!f)return;var s=document.getElementById('cf-status');var b=f.querySelector('.btn-submit');f.addEventListener('submit',function(e){e.preventDefault();b.disabled=true;var o=b.textContent;b.textContent='Sending...';s.className='form-status';fetch(f.action,{method:'POST',body:new FormData(f),headers:{'Accept':'application/json'}}).then(function(r){return r.json();}).then(function(x){if(x.success){f.reset();s.className='form-status ok';s.textContent='Thank you. Your message has been sent and I will reply shortly.';}else{throw new Error('rejected');}}).catch(function(){s.className='form-status err';s.innerHTML='Something went wrong sending that. Please email <a href="mailto:info@rgctechnology.co.uk">info@rgctechnology.co.uk</a> directly.';}).finally(function(){b.disabled=false;b.textContent=o;});});})();
+</script>
       </div>
       <div>
         <div class="contact-card">
